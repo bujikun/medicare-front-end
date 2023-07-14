@@ -1,0 +1,5 @@
+"use client"
+export * from "react-icons/fa6"
+export * from "react-icons/md"
+export * from "react-icons/fi"
+export * from "react-icons/bs"
