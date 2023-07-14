@@ -1,5 +1,5 @@
 # Medicare-front-end
-A healthcare web application with a rich and user-friendly interface.
+E-healthcare web application with a rich and user-friendly interface.
 
 ## Features
 > #### User Portal:
