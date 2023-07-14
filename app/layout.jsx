@@ -1,8 +1,9 @@
-import ChakraContextProvider from '../lib/wrapper/chakra/provider';
+import ChakraContextProvider from '../contexts/ChakraContextProvider';
 import './globals.css'
 import { Quicksand } from 'next/font/google'
 
-const quicksand = Quicksand({ subsets: ['latin'] })
+const quicksand = Quicksand({
+  subsets: ['latin']})
 
 export const metadata = {
   title: "E-Healthcare",

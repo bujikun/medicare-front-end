@@ -1,0 +1,9 @@
+.navbar{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: "4rem";
+    margin-bottom: ".5rem";
+    padding:.5rem;
+}
