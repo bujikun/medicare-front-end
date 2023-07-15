@@ -1,4 +1,4 @@
-import { Grid, GridItem,Text } from "@/chakra-wrapper/ui"
+import { Grid, GridItem,Text } from "@/wrapper/chakra/ui"
 
 const Home = () => {
   return (

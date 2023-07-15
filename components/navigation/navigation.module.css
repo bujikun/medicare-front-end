@@ -1,9 +1,33 @@
-.navbar{
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    height: "4rem";
-    margin-bottom: ".5rem";
-    padding:.5rem;
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: "4rem";
+  margin-bottom: "1.5rem";
+  padding: 0.5rem;
+}
+
+.sidebar {
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 11rem;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.backdrop {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }

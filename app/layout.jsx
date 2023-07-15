@@ -9,6 +9,7 @@ export const metadata = {
   title: "E-Healthcare",
   description:
     " e-healthcare web application for ordering medicines of different categories",
+
 };
 
 export default function RootLayout({ children }) {
