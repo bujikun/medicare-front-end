@@ -1,5 +1,6 @@
+"use client";
 import styles from "@/components/navigation/navigation.module.css";
-import { Flex, List, ListIcon, ListItem, Text } from "@/wrapper/chakra/ui";
+import { Flex, IconButton, List, ListIcon, ListItem, Text,Box } from "@/wrapper/chakra/ui";
 import {
   BiSolidDashboard,
   FaBriefcaseMedical,
@@ -10,10 +11,15 @@ import {
   FiSettings,
   MdPolicy,
   BsArrowDownRightSquare,
+  AiOutlineClose,
 } from "@/wrapper/icons";
 import Image from "next/image";
 import { Link } from "@/wrapper/chakra/next-js";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+
 const SideBar = () => {
+   const { isDrawerOpen, isSmallScreen, setIsDrawerOpen } =
+       useDashboardContext();
   const sidebarItems = [
     {
       name: "Home",
@@ -61,27 +67,43 @@ const SideBar = () => {
       icon: BsArrowDownRightSquare,
     },
   ];
-  return (
+
+  return isDrawerOpen ? (
     <div className={styles.sidebar}>
+        { isSmallScreen && <Box>
+              <IconButton icon={<AiOutlineClose />} onClick={()=>{setIsDrawerOpen(false)}} sx={{
+              right:-1,
+                  top: 0,
+              position:"absolute",
+                  size:"1rem",
+                  borderRadius:"1rem",
+                  bg:"none",
+                  color:"#333",
+                  fontWeight: 500,
+                  fontSize:"1.5rem"
+          }} />
+          </Box>}
+
       <Image
         src="/logo.png"
         width={100}
         height={100}
         alt="logo"
-        style={{ marginBottom: "3rem" }}
+              style={{ marginBottom: "3rem" }}
+              priority={true}
       />
       <List spacing={4}>
         {sidebarItems.map((item) => (
           <ListItem
             key={item.name}
             sx={{
-                fontWeight: 500,
-                borderRadius:"0.5rem",
+              fontWeight: 500,
+              borderRadius: "0.5rem",
               padding: "0.3rem 0.1rem",
               _hover: {
                 bg: "teal.100",
-                  color: "teal.700",
-                fontWeight:600,
+                color: "teal.700",
+                fontWeight: 600,
               },
             }}
           >
@@ -100,6 +122,9 @@ const SideBar = () => {
         ))}
       </List>
     </div>
+  ) : (
+    <></>
   );
 };
+
 export default SideBar;
