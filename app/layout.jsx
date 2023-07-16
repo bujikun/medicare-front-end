@@ -1,4 +1,5 @@
 import ChakraContextProvider from '../contexts/ChakraContextProvider';
+import {SessionProvider} from "next-auth/react"
 import './globals.css'
 import { Quicksand } from 'next/font/google'
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={quicksand.className}>
-        <ChakraContextProvider>{children}</ChakraContextProvider>
+        <SessionProvider>
+          <ChakraContextProvider>{children}</ChakraContextProvider>
+        </SessionProvider>
       </body>
     </html>
   );
