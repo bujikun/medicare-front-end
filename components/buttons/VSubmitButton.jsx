@@ -12,7 +12,6 @@ const VSubmitButton = ({text}) => {
       type="submit"
       my={6}
           isDisabled={!(Object.keys(errors).length === 0)}
-        
     >
       {text}
     </Button>

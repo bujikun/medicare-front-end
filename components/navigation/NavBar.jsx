@@ -24,6 +24,7 @@ import {
 import { Link } from "@/wrapper/chakra/next-js";
 import DrawerToggleButton from "../buttons/DrawerToggleButton";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { signOut,useSession } from "next-auth/react";
 
 const navItems = [
   {
@@ -52,6 +53,8 @@ const NavBar = () => {
 };
 
 const NavBarList = ({ navItems }) => {
+  const { data: session, status } = useSession();
+  
   return (
     <List>
       <Flex gap={4} mr="1rem" align="center" as="nav">
@@ -88,17 +91,22 @@ const NavBarList = ({ navItems }) => {
                   color: "white",
                 },
               }}
+              onClick={() => {
+                signOut({callbackUrl:"/"})
+              }}
             />
           </Tooltip>
         </ListItem>
         <ListItem>
-          <Button
-            variant="solid"
-            colorScheme="blue"
-            leftIcon={<PiSignInBold />}
-          >
-            Sign In
-          </Button>
+          {status === "unauthenticated" && (
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              leftIcon={<PiSignInBold />}
+            >
+              Sign In
+            </Button>
+          )}
         </ListItem>
       </Flex>
     </List>
@@ -150,12 +158,17 @@ const NavBarMenu = ({ navItems }) => {
         ))}
 
         <MenuItem sx={itemStyle}>
-          <Link href="#" onClick={() => {}} sx={linkStyle}>
-            Sign In
-          </Link>
+          {status === "unauthenticated" && (
+            <Link href="#" onClick={() => {}} sx={linkStyle}>
+              Sign In
+            </Link>
+          )}
         </MenuItem>
         <MenuItem sx={itemStyle}>
-          <Link href="#" onClick={() => {}} sx={linkStyle}>
+          <Link href="#" onClick={(e) => {
+            e.preventDefault();
+            signOut({callbackUrl:"/"})
+          }} sx={linkStyle}>
             Sign Out
           </Link>
         </MenuItem>

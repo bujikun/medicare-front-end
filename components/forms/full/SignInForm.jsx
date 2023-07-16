@@ -2,6 +2,7 @@
 
 import VSubmitButton from "@/components/buttons/VSubmitButton";
 import VInputField from "@/components/forms/inputs/VInputField";
+import {signIn} from "next-auth/react"
 import {
     Box,
   Button,
@@ -29,13 +30,21 @@ const validationSchema = Yup.object({
 });
 
 const onSubmit = (values, { setSubmitting }) => {
-  setTimeout(() => {
     setSubmitting(true);
-    console.log(values);
-  }, 3000);
+    signIn("credentials", {
+      username: values.username,
+        password: values.password,
+    //   callbackUrl: `${window.location.origin}/`
+      callbackUrl: "/admin/dashboard/home",
+    });
+//   setTimeout(() => {
+//     setSubmitting(true);
+//     console.log(values);
+//   }, 3000);
 };
 
 const SignInForm = () => {
+    
     return (
       <Grid placeItems="center" h="100vh" w="100vw">
         <GridItem>
@@ -51,8 +60,8 @@ const SignInForm = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
-              >
-                <Form>
+                        >
+                            <Form>
                   <VInputField
                     label="Username"
                     name="username"
