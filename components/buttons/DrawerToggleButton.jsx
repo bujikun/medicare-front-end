@@ -1,3 +1,4 @@
+"use client"
 import {
   IconButton,
 } from "@/wrapper/chakra/ui";
@@ -5,9 +6,7 @@ import {
   AiOutlineMenu,
 } from "@/wrapper/icons";
 
-import useDashboardContext  from "@/contexts/DashboardContext";
-
-const DrawerToggleButton = ({ isDrawerOpen,setIsDrawerOpen }) => {
+const DrawerToggleButton = ({ isDrawerOpen, setIsDrawerOpen }) => {
   const style = {
     bg: "none",
     fontWeight: "500",

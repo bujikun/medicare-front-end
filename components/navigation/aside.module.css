@@ -1,0 +1,27 @@
+.aside_hidden{
+    display: none;
+    transition: 2.2s cubic-bezier(.36,-0.01,0,.77);
+
+}
+
+@media screen and (max-width: 768px) {
+  .aside {
+    /* transform: translateX(-100%); */
+    display: block;
+    top: 0;
+    position: fixed;
+    left: 0;
+    z-index: 100;
+  }
+  .aside_hidden{
+    left: -1000px;
+    transition: 2.2s cubic-bezier(.36,-0.01,0,.77);
+
+}
+}
+
+.aside {
+  flex-basis: 15rem;
+  transition: 2.2s cubic-bezier(.36,-0.01,0,.77);
+  
+}

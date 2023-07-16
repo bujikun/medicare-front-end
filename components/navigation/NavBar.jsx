@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import styles from "@/components/navigation/navigation.module.css";
 import {
   Flex,
@@ -13,7 +13,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  useMediaQuery,
 } from "@/wrapper/chakra/ui";
 import {
   BiChevronDownCircle,
@@ -41,16 +40,12 @@ const navItems = [
   },
 ];
 const NavBar = () => {
-   const { isDrawerOpen, isSmallScreen,setIsDrawerOpen } = useDashboardContext();
+    const { isDrawerOpen,setIsDrawerOpen,isSmallScreen } = useDashboardContext();
   return (
-    <header className={styles.navbar} style={(!isDrawerOpen)?{width:"100%",margin:"0 1rem"}:{}}>
+    <header className={styles.navbar}>
       <Flex justify="space-between">
-        <DrawerToggleButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}/>
-        {isSmallScreen ? (
-          <NavBarMenu navItems={navItems} />
-        ) : (
-          <NavBarList navItems={navItems} />
-        )}
+          <DrawerToggleButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}/>
+       {isSmallScreen ? <NavBarList navItems={navItems} />:<NavBarMenu navItems={navItems}/>}
       </Flex>
     </header>
   );

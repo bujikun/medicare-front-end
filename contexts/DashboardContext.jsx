@@ -5,14 +5,12 @@ import { createContext, useContext, useState } from "react";
 const Context = createContext(null);
 
 const DashboardContext = ({ children }) => {
-  const smallScreen = useMediaQuery("(max-width: 769px)", {
-    ssr: true,
-    fallback: true,
-  });
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-    
+  const isSmallScreen = useMediaQuery("screen and (min-width: 768px)", {
+    ssr:true, fallback:true
+  });
   return (
-    <Context.Provider value={{ isSmallScreen: smallScreen[0],isDrawerOpen ,setIsDrawerOpen }}>
+    <Context.Provider value={{isDrawerOpen ,setIsDrawerOpen,isSmallScreen:isSmallScreen[0] }}>
       {children}
     </Context.Provider>
   );
