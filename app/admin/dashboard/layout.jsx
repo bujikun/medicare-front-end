@@ -12,23 +12,22 @@ const DashboardLayout = async ({ children }) => {
   const session = await getServerSession(authOptions);
   const active = session?.active ?? false; 
   if (!active) {
-    redirect("/auth/signin")
+    redirect("/auth/signin");
   }
   return (
     <div
       style={{
-        maxWidth: "2000px",
+        width: "100vw",
       }}
     >
       <div className={styles.wrapper}>
         <DashboardContext>
-         <Aside/>
+          <Aside />
           <main className={styles.main}>
             <div className={styles.nav_container}>
-
-            <NavBar />
+              <NavBar />
             </div>
-            {children}
+            <div className={styles.children}>{children}</div>
           </main>
         </DashboardContext>
       </div>

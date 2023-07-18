@@ -10,12 +10,18 @@
   background-color: #fefefe;
   padding: .2rem 0;
   margin-bottom: 2.5rem;
+  width: 100%;
 }
 
+.children{
+  margin: 1rem 3rem;
+  width: 100%;
+}
 
 .main {
   height: 100vh;
   flex-grow: 1;
+  min-width: calc(100vw - 15rem);
 }
 
 @media screen and (max-width: 768px) {
