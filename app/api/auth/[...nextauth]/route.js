@@ -1,3 +1,4 @@
+import { checkSessionValidity, fetchPOST } from "@/lib/util";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions = {
@@ -43,8 +44,12 @@ export const authOptions = {
       session.access_token = token.access_token;
       session.role = token.role;
       session.account_number = token.account_number;
-      console.log("SESSION CALLED");
-      
+      const response = await checkSessionValidity("/auth/introspect",token.access_token)
+      if (response.status === 401) {
+        session.active = false;
+      } else if (response.ok){
+        session.active = true;
+      }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {

@@ -6,12 +6,16 @@
   align-items: flex-start;
 }
 
+.nav_container{
+  background-color: #fefefe;
+  padding: .2rem 0;
+  margin-bottom: 2.5rem;
+}
 
 
 .main {
   height: 100vh;
   flex-grow: 1;
-  margin-top: 1rem;
 }
 
 @media screen and (max-width: 768px) {

@@ -42,7 +42,7 @@ const navItems = [
 ];
 const NavBar = () => {
   const { isDrawerOpen, setIsDrawerOpen, isSmallScreen } = useDashboardContext();
-    const { data: session, status: sessionStatus } = useSession();
+    const { status: sessionStatus } = useSession();
 
   return (
     <header className={styles.navbar}>
@@ -67,7 +67,10 @@ const NavBarList = ({ navItems,sessionStatus }) => {
     <List>
       <Flex gap={4} mr="1rem" align="center" as="nav">
         <ListItem>
-          <IconButton icon={BsCartCheck} sx={{ fontSize: "1.5rem" }} />
+          <IconButton icon={<BsCartCheck />} sx={{
+            fontSize: "1.5rem", color: "#333", bg: "none", _hover: {
+            color:"teal.700",bg:"teal.50"
+          }}} />
         </ListItem>
         {navItems.map((item) => (
           <ListItem key={item.name}>
