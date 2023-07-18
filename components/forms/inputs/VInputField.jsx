@@ -5,7 +5,7 @@ import { MdCheckCircle,MdCancel } from "@/wrapper/icons";
 const VInputField = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <FormControl isInvalid={meta.touched && meta.error}>
+    <FormControl isInvalid={meta.touched && meta.error || props.loginerror}>
       <FormLabel htmlFor={props?.id || props?.name}>{label}</FormLabel>
       <InputGroup>
         <Input {...props} {...field} />

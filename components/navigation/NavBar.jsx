@@ -53,7 +53,7 @@ const NavBar = () => {
 };
 
 const NavBarList = ({ navItems }) => {
-  const { data: session, status } = useSession();
+  const { data: session, status:sessionStatus } = useSession();
   
   return (
     <List>
@@ -98,7 +98,7 @@ const NavBarList = ({ navItems }) => {
           </Tooltip>
         </ListItem>
         <ListItem>
-          {status === "unauthenticated" && (
+          {sessionStatus === "unauthenticated" && (
             <Button
               variant="solid"
               colorScheme="blue"
@@ -158,7 +158,7 @@ const NavBarMenu = ({ navItems }) => {
         ))}
 
         <MenuItem sx={itemStyle}>
-          {status === "unauthenticated" && (
+          {sessionStatus === "unauthenticated" && (
             <Link href="#" onClick={() => {}} sx={linkStyle}>
               Sign In
             </Link>
