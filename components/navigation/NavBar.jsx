@@ -41,19 +41,27 @@ const navItems = [
   },
 ];
 const NavBar = () => {
-    const { isDrawerOpen,setIsDrawerOpen,isSmallScreen } = useDashboardContext();
+  const { isDrawerOpen, setIsDrawerOpen, isSmallScreen } = useDashboardContext();
+    const { data: session, status: sessionStatus } = useSession();
+
   return (
     <header className={styles.navbar}>
       <Flex justify="space-between">
-          <DrawerToggleButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}/>
-       {isSmallScreen ? <NavBarList navItems={navItems} />:<NavBarMenu navItems={navItems}/>}
+        <DrawerToggleButton
+          isDrawerOpen={isDrawerOpen}
+          setIsDrawerOpen={setIsDrawerOpen}
+        />
+        {isSmallScreen ? (
+          <NavBarList navItems={navItems} sessionStatus={sessionStatus} />
+        ) : (
+          <NavBarMenu navItems={navItems} sessionStatus={sessionStatus} />
+        )}
       </Flex>
     </header>
   );
 };
 
-const NavBarList = ({ navItems }) => {
-  const { data: session, status:sessionStatus } = useSession();
+const NavBarList = ({ navItems,sessionStatus }) => {
   
   return (
     <List>
@@ -113,7 +121,7 @@ const NavBarList = ({ navItems }) => {
   );
 };
 
-const NavBarMenu = ({ navItems }) => {
+const NavBarMenu = ({ navItems, sessionStatus }) => {
   const itemStyle = {
     fontWeight: 500,
     _hover: {
@@ -124,8 +132,8 @@ const NavBarMenu = ({ navItems }) => {
   };
 
   const linkStyle = {
-                _hover: { textDecoration: "none" },
-              }
+    _hover: { textDecoration: "none" },
+  };
   return (
     <Menu mr={2}>
       <MenuButton
@@ -165,10 +173,14 @@ const NavBarMenu = ({ navItems }) => {
           )}
         </MenuItem>
         <MenuItem sx={itemStyle}>
-          <Link href="#" onClick={(e) => {
-            e.preventDefault();
-            signOut({callbackUrl:"/"})
-          }} sx={linkStyle}>
+          <Link
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              signOut({ callbackUrl: "/" });
+            }}
+            sx={linkStyle}
+          >
             Sign Out
           </Link>
         </MenuItem>

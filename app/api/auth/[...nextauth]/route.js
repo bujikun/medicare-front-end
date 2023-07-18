@@ -25,8 +25,8 @@ export const authOptions = {
             },
           }
         );
-          if (response.status === 401) {
-              return null;
+        if (response.status === 401) {
+          return null;
         }
         const data = await response.json();
         console.log(data);
@@ -36,17 +36,26 @@ export const authOptions = {
   ],
   pages: {
     signIn: "/auth/signin",
-    error: "/auth/signin"
+    error: "/auth/signin",
   },
   callbacks: {
-    // redirect: async ({ url, baseUrl }) => {
-    //     console.log("URL", url);
-    //     console.log("BASE", baseUrl);
-    //     if (url.startsWith("/")) {
-    //         return `${baseUrl}${url}`
-    //     }
-    //     return "/";
-    // }
+    async session({ session, user, token }) {
+      session.access_token = token.access_token;
+      session.role = token.role;
+      session.account_number = token.account_number;
+      console.log("SESSION CALLED");
+      
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (account) {
+        //account available only first time after login
+        token.access_token = user.token;
+        token.role = user.role;
+        token.account_number = user.account_number
+      }
+      return token;
+    },
   },
 };
 
