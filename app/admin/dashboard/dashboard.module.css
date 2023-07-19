@@ -15,7 +15,7 @@
 
 .children{
   margin: 1rem 3rem;
-  width: 100%;
+  max-width: 94%;
 }
 
 .main {

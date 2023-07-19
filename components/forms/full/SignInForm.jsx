@@ -19,7 +19,7 @@ import {
 } from "@/wrapper/chakra/ui";
 import { Form, Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 const initialValues = {
   username: "",
   password: "",
@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
 
 const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-   signIn("credentials", {
+  signIn("credentials", {
       username: values.username,
         password: values.password,
       callbackUrl: "/admin/dashboard/home",
@@ -67,7 +67,7 @@ const SignInForm = () => {
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
               >
-                <Form>
+                <Form method="POST">
                   <VInputField
                     label="Username"
                     name="username"

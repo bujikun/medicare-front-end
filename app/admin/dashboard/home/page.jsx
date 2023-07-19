@@ -30,7 +30,7 @@ const Home = async () => {
       gap={4}
     >
       {homeItems?.map((item) => (
-        <GridItem p="0.5rem" key={item.title}>
+        <GridItem p="0.5rem" key={item.title} >
           <HomeCard
             title={item.title}
             count={item.count}
@@ -47,9 +47,7 @@ const HomeCard = ({ title, count, summary }) => {
     <Card
       direction={{ base: "column", sm: "row" }}
       overflow="hidden"
-      variant="elevated"
-      colorScheme="red"
-    >
+      variant="elevated"    >
       <Flex
         justify="center"
         align="center"

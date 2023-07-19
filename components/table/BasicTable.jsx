@@ -1,61 +1,156 @@
-"use client"
+"use client";
 
-import { useReactTable } from "@tanstack/react-table"
-import { useMemo } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
+import { useMemo, useState } from "react";
 import {
   Table,
   TableContainer,
   TableCaption,
   Thead,
   Tr,
-  Tfoot,
+    Stack,
+    InputGroup,
+    InputLeftElement,
+  Input,
   Tbody,
   Th,
   Td,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
+  Button,
+  IconButton,
+  Icon,
 } from "@/wrapper/chakra/ui";
-
-const BasicTable = ({ data, columns }) => {
-    const memoizedData = useMemo(()=>data,[]);
-    const table = useReactTable({ memoizedData, columns });
-    
-    return (
-      <Card direction="column"  variant="elevated">
-        <CardHeader></CardHeader>
-        <CardBody>
-          <TableContainer>
-            <Table variant="striped" colorScheme="green">
-              <TableCaption>Imperial to metric conversion factors</TableCaption>
-
-              <Thead>
-                <Tr>
-                  <Th>To convert</Th>
-                  <Th>into</Th>
-                  <Th isNumeric>multiply by</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>inches</Td>
-                  <Td>millimetres (mm)</Td>
-                  <Td isNumeric>25.4</Td>
-                </Tr>
-              </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Th>To convert</Th>
-                  <Th>into</Th>
-                  <Th isNumeric>multiply by</Th>
-                </Tr>
-              </Tfoot>
-            </Table>
-          </TableContainer>
-        </CardBody>
-        <CardFooter></CardFooter>
-      </Card>
-    );
-}
-export default BasicTable
+import ActionMenu from "../misc/ActionMenu";
+import {
+  BsChevronDoubleLeft,
+  BsChevronDoubleRight,
+  BsChevronLeft,
+  BsChevronRight,
+  MdOutlineArrowUpward,
+  MdOutlineArrowDownward,
+  BsSearch,
+} from "@/wrapper/icons";
+const BasicTable = ({ data, columns, name }) => {
+  const [sorting, setIsSorting] = useState([]);
+  const [filtering, setIsFiltering] = useState('');
+  const memoizedData = useMemo(() => data, []);
+  const table = useReactTable({
+    data: memoizedData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+        sorting: sorting,
+        globalFilter:filtering,
+    },
+      onSortingChange: setIsSorting,
+    onGlobalFilterChange:setIsFiltering
+  });
+  return (
+    <TableContainer>
+      <Stack spacing={4} my={4}>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={BsSearch} />
+          </InputLeftElement>
+          <Input type="text" placeholder="Type to search" value={filtering} onChange={e=>setIsFiltering(e.target.value)}/>
+        </InputGroup>
+      </Stack>
+      <Table variant="striped" colorScheme="gray" overflow="scroll" size="sm">
+        <TableCaption>
+         {} {memoizedData.length} available {name}
+        </TableCaption>
+        <Thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <Tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <Th
+                  key={header.id}
+                  cursor="pointer"
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    {
+                      asc: (
+                        <Icon
+                          as={MdOutlineArrowUpward}
+                          mx={2}
+                          fontWeight={900}
+                        />
+                      ),
+                      desc: (
+                        <Icon
+                          as={MdOutlineArrowDownward}
+                          mx={2}
+                          fontWeight={600}
+                        />
+                      ),
+                    }[header.column.getIsSorted() ?? null]
+                  }
+                </Th>
+              ))}
+              <Th>Action</Th>
+            </Tr>
+          ))}
+        </Thead>
+        <Tbody>
+          {table.getRowModel().rows.map((row) => (
+            <Tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <Td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Td>
+              ))}
+              <Td>
+                <ActionMenu id={row.original.id} />
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+      <IconButton
+        icon={<BsChevronDoubleLeft />}
+        mx={4}
+        colorScheme="green"
+        borderRadius="50%"
+        onClick={() => table.setPageIndex(0)}
+      />
+      <IconButton
+        icon={<BsChevronLeft />}
+        mx={4}
+        colorScheme={"blue"}
+        borderRadius="50%"
+        onClick={() => table.previousPage()}
+        isDisabled={!table.getCanPreviousPage()}
+      />
+      <IconButton
+        icon={<BsChevronRight />}
+        mx={4}
+        colorScheme={"blue"}
+        borderRadius="50%"
+        onClick={() => table.nextPage()}
+        isDisabled={!table.getCanNextPage()}
+      />
+      <IconButton
+        icon={<BsChevronDoubleRight />}
+        mx={4}
+        colorScheme="green"
+        borderRadius="50%"
+        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+      />
+    </TableContainer>
+  );
+};
+export default BasicTable;
