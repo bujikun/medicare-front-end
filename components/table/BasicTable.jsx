@@ -66,7 +66,7 @@ const BasicTable = ({ data, columns, name }) => {
       </Stack>
       <Table variant="striped" colorScheme="gray" overflow="scroll" size="sm">
         <TableCaption>
-         {} {memoizedData.length} available {name}
+         {memoizedData.length} available {name}
         </TableCaption>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (
