@@ -2,13 +2,12 @@ import {Icon, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Input
 import { useField } from "formik";
 import { MdCheckCircle,MdCancel } from "@/wrapper/icons";
 
-const VInputField = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+const VImageInputField = ({ label, ...props }) => {
+  const [field, meta, helpers] = useField(props);
   return (
     <FormControl isInvalid={meta.touched && meta.error || props.error}>
       <FormLabel htmlFor={props?.id || props?.name}>{label}</FormLabel>
-      <InputGroup>
-        <Input {...props} {...field} />
+        <input {...props} {...field}  onChange={e=>helpers.setValue(e.target.files[0])} value={{}}/>
         {meta.touched && (
           <InputRightElement>
               <Icon
@@ -21,9 +20,8 @@ const VInputField = ({ label, ...props }) => {
               />
           </InputRightElement>
         )}
-      </InputGroup>
       <FormErrorMessage>{meta.error}</FormErrorMessage>
     </FormControl>
   );
 };
-export default VInputField;
+export default VImageInputField;

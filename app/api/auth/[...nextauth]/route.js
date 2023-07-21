@@ -1,6 +1,7 @@
 import { checkSessionValidity, fetchPOST } from "@/lib/util";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { redirect } from "next/navigation";
 export const authOptions = {
   session: {
     strategy: "jwt",
@@ -47,6 +48,7 @@ export const authOptions = {
       const response = await checkSessionValidity("/auth/introspect",token.access_token)
       if (response.status === 401) {
         session.active = false;
+        redirect("/auth/signin");
       } else if (response.ok){
         session.active = true;
       }

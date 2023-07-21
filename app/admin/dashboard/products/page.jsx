@@ -11,6 +11,7 @@ import {
   Button,
   IconButton
 } from "@/wrapper/chakra/ui";
+import { redirect } from "next/navigation";
 
 const columns = [
     {
@@ -32,7 +33,9 @@ const columns = [
 ];
 const ProductIndexPage = async () => {
     const response = await fetchGET("/products");
-    //if(respons)
+  if (response.status === 401) {
+    redirect("/auth/signin", "replace");
+    }
   if (!response.ok) {
     return (
       <Alert status="error">

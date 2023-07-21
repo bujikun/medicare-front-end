@@ -73,14 +73,14 @@ const SignInForm = () => {
                     name="username"
                     type="text"
                     autoComplete="on"
-                    loginerror={error}
+                    error={error}
                   />
                   <VInputField
                     label="Password"
                     name="password"
                     type="password"
                     autoComplete="on"
-                    loginerror={error}
+                    error={error}
                   />
                   <VSubmitButton text="Log In" />
                 </Form>

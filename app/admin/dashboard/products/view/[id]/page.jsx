@@ -3,10 +3,11 @@ import { fetchGET } from "@/lib/util";
 import { Card,Stack,CardBody,Text,Heading,Button,CardFooter, Box } from "@/wrapper/chakra/ui";
 import Image from "next/image";
 import {AiOutlineEdit} from "@/wrapper/icons"
+import ImageViewer from "@/components/misc/ImageViewer";
 const ViewProductPage = async ({ params }) => {
 
     const response = await fetchGET(`/products/${params.id}`);
-    const product = await response.json();
+  const product = await response.json();
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -14,14 +15,15 @@ const ViewProductPage = async ({ params }) => {
       variant="outline"
       border="none"
     >
-      <Image
-        //maxW={{ base: "100%", sm: "300px" }}
-        src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-        alt={`${product.name}`}
-        width={300}
-        height={300}
-      />
-
+      <Box
+        m="0.4rem"
+        minWidth="300px"
+        maxWidth="400px"
+        minHeight="300px"
+        maxHeight="400px"
+      >
+        <ImageViewer src={product.image_url} name={product.name} />
+      </Box>
       <Stack>
         <CardBody>
           <Heading size="md">{`${product.name}`}</Heading>
@@ -56,8 +58,8 @@ const ViewProductPage = async ({ params }) => {
             <Box sx={{ display: "inline-block", margin: "0 0.5rem 0 0" }}>
               <VLink
                 href={`/admin/dashboard/products/edit/${params.id}`}
-                                  icon={<AiOutlineEdit />}
-                                  scheme="red"
+                icon={<AiOutlineEdit />}
+                scheme="red"
               >
                 Disable
               </VLink>
@@ -68,4 +70,5 @@ const ViewProductPage = async ({ params }) => {
     </Card>
   );
 }
+
 export default ViewProductPage

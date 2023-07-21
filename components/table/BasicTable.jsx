@@ -114,7 +114,7 @@ const BasicTable = ({ data, columns, name }) => {
                 </Td>
               ))}
               <Td>
-                <ActionMenu id={row.original.id} />
+                <ActionMenu id={row.original.id} name={row.original.name} />
               </Td>
             </Tr>
           ))}

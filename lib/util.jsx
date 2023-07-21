@@ -11,13 +11,37 @@ export const fetchGET = async ( path) => {
   
 };
 
-export const fetchPOST = async (path) => {
+export const fetchPOST = async (path,body) => {
   const session = await getServerSession(authOptions);
     return await fetch(`${process.env.BACKEND_API_BASE_URL}${path}`, {
       method:"POST",
     headers: {
       Authorization: `Bearer ${session.access_token}`,
+      },
+    body:JSON.stringify(body)
+  });
+};
+
+export const doPOSTFormBody = async (path, formData) => {
+  const session = await getServerSession(authOptions);
+  return await fetch(`${process.env.BACKEND_API_BASE_URL}${path}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(formData),
+  });
+};
+export const doPUTFormBody = async (path, formData) => {
+  const session = await getServerSession(authOptions);
+  return await fetch(`${process.env.BACKEND_API_BASE_URL}${path}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
   });
 };
 

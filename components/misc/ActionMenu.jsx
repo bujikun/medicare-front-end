@@ -1,19 +1,25 @@
-import { Menu,MenuButton,MenuList,MenuItem,IconButton } from "@/wrapper/chakra/ui";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from "@/wrapper/chakra/ui";
 import {
   BsThreeDotsVertical,
   MdRemoveRedEye,
   MdEditSquare,
   FaTrash,
 } from "@/wrapper/icons";
-const ActionMenu = ({ id }) => {
-    const style = {
-        bg: "none",
-        _hover: {
-            bg: "teal.50",
-            color: "teal.700",
-            fontWeight: "600"
-        }
-    };
+const ActionMenu = ({ id,name }) => {
+  const style = {
+    bg: "none",
+    _hover: {
+      bg: "teal.50",
+      color: "teal.700",
+      fontWeight: "600",
+    },
+  };
   return (
     <Menu colorScheme="teal">
       <MenuButton
@@ -47,6 +53,14 @@ const ActionMenu = ({ id }) => {
           Edit
         </MenuItem>
         <MenuItem
+          icon={<MdEditSquare />}
+          as="a"
+          href={`/admin/dashboard/products/add/image?id=${id}&name=${name}`}
+          sx={style}
+        >
+          Change Image
+        </MenuItem>
+        <MenuItem
           icon={<FaTrash />}
           sx={{
             bg: "none",
@@ -62,5 +76,5 @@ const ActionMenu = ({ id }) => {
       </MenuList>
     </Menu>
   );
-}
-export default ActionMenu
+};
+export default ActionMenu;
