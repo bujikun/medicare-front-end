@@ -5,20 +5,20 @@ import { MdCheckCircle,MdCancel } from "@/wrapper/icons";
 const VInputField = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <FormControl isInvalid={meta.touched && meta.error || props.error}>
+    <FormControl isInvalid={props.error || meta.touched && meta.error}>
       <FormLabel htmlFor={props?.id || props?.name}>{label}</FormLabel>
       <InputGroup>
         <Input {...props} {...field} />
         {meta.touched && (
           <InputRightElement>
-              <Icon
-                as={meta.error? MdCancel:MdCheckCircle}
+            <Icon
+              as={meta.error ? MdCancel : MdCheckCircle}
               sx={{
-                  color:(meta.error?"red":"green"),
-                fontWeight:500,
-                fontSize:"md"
-                }}
-              />
+                color: meta.error ? "red" : "green",
+                fontWeight: 500,
+                fontSize: "md",
+              }}
+            />
           </InputRightElement>
         )}
       </InputGroup>

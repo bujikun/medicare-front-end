@@ -59,7 +59,9 @@ const SignInForm = ({callbackUrl}) => {
             {error && (
               <Alert status="error">
                 <AlertTitle>Error!</AlertTitle>
-                <AlertDescription>Invalid credentials!</AlertDescription>
+                <AlertDescription>
+                  {error === "CredentialsSignin"?"Invalid Credentials":error}
+                </AlertDescription>
               </Alert>
             )}
             <CardBody>

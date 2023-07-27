@@ -125,7 +125,8 @@ const NavBarList = ({ navItems,sessionStatus }) => {
               <Button
                 variant="ghost"
                 colorScheme="blue"
-                onClick={() => {}}
+                href="/public/register"
+                as="a"
               >
                 Register
               </Button>
@@ -194,7 +195,7 @@ const NavBarMenu = ({ navItems, sessionStatus }) => {
         {sessionStatus === "unauthenticated" && (
           <>
             <MenuItem sx={itemStyle}>
-              <Link href="#" onClick={() => {}} sx={linkStyle}>
+              <Link href="/public/register" sx={linkStyle}>
                 Register
               </Link>
             </MenuItem>
