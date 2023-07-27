@@ -33,18 +33,19 @@ const validationSchema = Yup.object({
     .min(6, "Password must be six or more characters"),
 });
 
-const onSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
-  signIn("credentials", {
-      username: values.username,
-        password: values.password,
-      callbackUrl: "/admin/dashboard/home",
-    });
-};
 
-const SignInForm = () => {
+
+const SignInForm = ({callbackUrl}) => {
     const params = useSearchParams();
-    const error = params.get("error");
+  const error = params.get("error");
+  const onSubmit = (values, { setSubmitting }) => {
+    setSubmitting(true);
+    signIn("credentials", {
+      username: values.username,
+      password: values.password,
+      callbackUrl:callbackUrl
+    });
+  };
     return (
       <Grid placeItems="center" h="100vh" w="100vw">
         <GridItem>

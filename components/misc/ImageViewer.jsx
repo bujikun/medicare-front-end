@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image";
 
 const ImageViewer = ({src,name}) => {
@@ -18,6 +17,6 @@ const ImageViewer = ({src,name}) => {
 }
 
 const loader = ({ src }) => {
-  return src;
+  return `${src}`;
 };
 export default ImageViewer

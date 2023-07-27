@@ -1,12 +1,39 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-        remotePatterns: [
-          {
-              protocol: "https",
-              hostname: "images.unsplash.com",
-              port: "",
-          }
+    minimumCacheTTL: 60,
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/",
+      },
+      {
+        protocol: "https",
+        hostname: "www.inspiredtaste.net",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.sidechef.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "static.onecms.io",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.allrecipes.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        port: "",
+      },
     ],
   },
 };

@@ -39,7 +39,7 @@ import {
 const BasicTable = ({ data, columns, name }) => {
   const [sorting, setIsSorting] = useState([]);
   const [filtering, setIsFiltering] = useState('');
-  const memoizedData = useMemo(() => data, []);
+  const memoizedData = useMemo(() => data, [data]);
   const table = useReactTable({
     data: memoizedData,
     columns,
