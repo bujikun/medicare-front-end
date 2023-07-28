@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import styles from "@/components/navigation/navigation.module.css";
 import {
   Flex,
@@ -21,13 +21,13 @@ import {
 } from "@/wrapper/icons";
 import { Link } from "@/wrapper/chakra/next-js";
 import { useDashboardContext } from "@/contexts/DashboardContext";
-import { signIn, signOut,useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const navItems = [
   {
     name: "Shop",
     href: "/public/shop",
-    session: "unauthenticated",
+    session: "free",
   },
   {
     name: "My Orders",
@@ -41,13 +41,15 @@ const navItems = [
   },
 ];
 const PublicNavBar = () => {
-  const {isSmallScreen } = useDashboardContext();
-    const { status: sessionStatus } = useSession();
+  const { isSmallScreen } = useDashboardContext();
+  const { status: sessionStatus } = useSession();
 
   return (
     <header className={styles.navbar}>
       <Flex justify="space-between">
-        <Heading as="h6" fontWeight={400} fontSize="1.3rem">Medicare</Heading>
+        <Heading as="a" fontWeight={600} fontSize="1.7rem" href="/">
+          Medicare
+        </Heading>
         {isSmallScreen ? (
           <NavBarList navItems={navItems} sessionStatus={sessionStatus} />
         ) : (
@@ -58,8 +60,7 @@ const PublicNavBar = () => {
   );
 };
 
-const NavBarList = ({ navItems,sessionStatus }) => {
-  
+const NavBarList = ({ navItems, sessionStatus }) => {
   return (
     <List>
       <Flex gap={4} mr="1rem" align="center" as="nav">
@@ -78,7 +79,7 @@ const NavBarList = ({ navItems,sessionStatus }) => {
           />
         </ListItem>
         {navItems.map((item) => {
-          if (item.session === sessionStatus) {
+          if (item.session === "free" || item.session === sessionStatus) {
             return (
               <ListItem key={item.name}>
                 <Link href={item.href}>
@@ -184,13 +185,17 @@ const NavBarMenu = ({ navItems, sessionStatus }) => {
         Menu
       </MenuButton>
       <MenuList>
-        {navItems.map((item) => (
-          <MenuItem key={item.name} sx={itemStyle}>
-            <Link href={item.href} sx={linkStyle}>
-              {item.name}
-            </Link>
-          </MenuItem>
-        ))}
+        {navItems.map((item) => {
+          if (item.session === "free" || item.session === sessionStatus) {
+            return (
+              <MenuItem key={item.name} sx={itemStyle}>
+                <Link href={item.href} sx={linkStyle}>
+                  {item.name}
+                </Link>
+              </MenuItem>
+            );
+          }
+        })}
 
         {sessionStatus === "unauthenticated" && (
           <>
@@ -200,11 +205,7 @@ const NavBarMenu = ({ navItems, sessionStatus }) => {
               </Link>
             </MenuItem>
             <MenuItem sx={itemStyle}>
-              <Link
-                href="#"
-                onClick={() => signIn()}
-                sx={linkStyle}
-              >
+              <Link href="#" onClick={() => signIn()} sx={linkStyle}>
                 Sign In
               </Link>
             </MenuItem>

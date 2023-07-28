@@ -5,6 +5,7 @@ import Aside from "@/components/navigation/Aside";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export const dynamic = "force-dynamic";
 
@@ -12,8 +13,9 @@ const DashboardLayout = async ({ children }) => {
   const session = await getServerSession(authOptions);
   const active = session?.active ?? false;
   if (session?.role !== "ADMIN") {
-    console.log("ROLE", session.role);
+    console.log("ROLE", session?.role);
     redirect("/auth/signin?error=You can not access this page", "replace");
+    signOut();
   }
   if (!active) {
     redirect("/auth/signin","replace");
