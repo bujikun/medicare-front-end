@@ -1,4 +1,4 @@
-import { checkSessionValidity, fetchPOST } from "@/lib/util";
+import { checkSessionValidity,} from "@/lib/util";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
@@ -31,7 +31,6 @@ export const authOptions = {
           return null;
         }
         const data = await response.json();
-        console.log(data);
         return data;
       },
     }),

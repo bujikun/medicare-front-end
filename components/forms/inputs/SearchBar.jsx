@@ -9,6 +9,7 @@ import {
   InputRightElement,
   Box,
   SkeletonText,
+  Text
 } from "@/wrapper/chakra/ui";
 import {BsSearch } from "@/wrapper/icons";
 import { useEffect, useState } from "react";
@@ -32,6 +33,7 @@ const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [result, setResult] = useState([]);
+  const [touched, setTouched] = useState(false);
   useEffect(() => {
     const fetchData = async (queryString) => {
       const response = await fetch("/api/public/products/search", {
@@ -61,6 +63,13 @@ const SearchBar = () => {
       setIsFetching(false);
       setResult([])
     }
+
+    if (query.length > 1 && result.length <= 0) {
+      setTouched(true)
+    } else {
+      setTouched(false);
+
+    }
   }
   console.log(result);
   return (
@@ -89,7 +98,12 @@ const SearchBar = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      {isFetching &&  query.length>=3 && (
+      {touched && result.length<=0 && (
+        <Box bg="white" p={2} borderRadius="0.5rem">
+          <Text fontWeight={600}>No Results</Text>
+        </Box>
+      )}
+      {isFetching && query.length >= 3 && (
         <Box padding="6" boxShadow="lg" bg="white">
           <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
         </Box>

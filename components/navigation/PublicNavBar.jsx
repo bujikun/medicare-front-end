@@ -12,6 +12,7 @@ import {
   MenuItem,
   MenuList,
   Heading,
+  Badge
 } from "@/wrapper/chakra/ui";
 import {
   BiChevronDownCircle,
@@ -22,6 +23,7 @@ import {
 import { Link } from "@/wrapper/chakra/next-js";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useCartContext } from "@/contexts/CartContext";
 
 const navItems = [
   {
@@ -43,6 +45,7 @@ const navItems = [
 const PublicNavBar = () => {
   const { isSmallScreen } = useDashboardContext();
   const { status: sessionStatus } = useSession();
+  const { state,} = useCartContext();
 
   return (
     <header className={styles.navbar}>
@@ -51,32 +54,49 @@ const PublicNavBar = () => {
           Medicare
         </Heading>
         {isSmallScreen ? (
-          <NavBarList navItems={navItems} sessionStatus={sessionStatus} />
+          <NavBarList
+            navItems={navItems}
+            sessionStatus={sessionStatus}
+            state={state}
+          />
         ) : (
-          <NavBarMenu navItems={navItems} sessionStatus={sessionStatus} />
+          <NavBarMenu
+            navItems={navItems}
+            sessionStatus={sessionStatus}
+            state={state}
+          />
         )}
       </Flex>
     </header>
   );
 };
 
-const NavBarList = ({ navItems, sessionStatus }) => {
+const NavBarList = ({ navItems, sessionStatus,state }) => {
+
   return (
     <List>
       <Flex gap={4} mr="1rem" align="center" as="nav">
         <ListItem>
-          <IconButton
-            icon={<BsCartCheck />}
+          <Button
+            leftIcon={<BsCartCheck />}
+            as="a"
+            href="/public/cart"
             sx={{
               fontSize: "1.5rem",
               color: "#333",
               bg: "none",
+              padding:"0",
+              position:"relative",
               _hover: {
                 color: "teal.700",
                 bg: "teal.50",
               },
             }}
-          />
+          >
+            {state.totalItemsCount>0 && <Badge variant="solid" colorScheme="red" sx={{position:"absolute",top:0,right:0}}>
+              {state.totalItemsCount}
+            </Badge>}
+          </Button>
         </ListItem>
         {navItems.map((item) => {
           if (item.session === "free" || item.session === sessionStatus) {
@@ -149,7 +169,8 @@ const NavBarList = ({ navItems, sessionStatus }) => {
   );
 };
 
-const NavBarMenu = ({ navItems, sessionStatus }) => {
+const NavBarMenu = ({ navItems, sessionStatus, state }) => {
+  
   const itemStyle = {
     fontWeight: 500,
     _hover: {
@@ -185,6 +206,32 @@ const NavBarMenu = ({ navItems, sessionStatus }) => {
         Menu
       </MenuButton>
       <MenuList>
+        <MenuItem>
+          <Button
+            leftIcon={<BsCartCheck />}
+            sx={{
+              fontSize: "1.5rem",
+              color: "#333",
+              bg: "none",
+              padding: "0",
+              position: "relative",
+              _hover: {
+                color: "teal.700",
+                bg: "teal.50",
+              },
+            }}
+          >
+            {state.totalItemsCount>0 && (
+              <Badge
+                variant="solid"
+                colorScheme="red"
+                sx={{ position: "absolute", top: 0, right: 0 }}
+              >
+                {state.totalItemsCount}
+              </Badge>
+            )}
+          </Button>
+        </MenuItem>
         {navItems.map((item) => {
           if (item.session === "free" || item.session === sessionStatus) {
             return (

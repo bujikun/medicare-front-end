@@ -11,6 +11,10 @@ export const fetchGET = async ( path) => {
   
 };
 
+export const fetchGETPublic = async (path) => {
+  return await fetch(`${process.env.BACKEND_API_BASE_URL}${path}`);
+};
+
 export const fetchPOST = async (path,body) => {
   const session = await getServerSession(authOptions);
     return await fetch(`${process.env.BACKEND_API_BASE_URL}${path}`, {

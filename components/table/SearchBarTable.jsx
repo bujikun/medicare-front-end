@@ -122,6 +122,8 @@ const SearchBarTable = ({ data, columns, name }) => {
                   fontSize="1.2rem"
                   isRound={true}
                   mx={2}
+                  as="a"
+                  href={`/public/products/${row.original.id}`}
                 />
                 <IconButton
                   icon={<FaCartArrowDown />}

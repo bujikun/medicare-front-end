@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/buttons/AddToCartButton";
 import {
   Box,
   Button,
@@ -7,9 +8,12 @@ import {
   CardBody,
   CardFooter,
   Heading,
-  Flex,
+    Flex,
+  Text
 } from "@/wrapper/chakra/ui";
+import {BsFillEyeFill} from "@/wrapper/icons"
 import Image from "next/image";
+
 const ShopPage = async () => {
       const response = await fetch(`${process.env.BACKEND_API_BASE_URL}/products/shop`);
     const products = await response.json();
@@ -22,21 +26,33 @@ const ShopPage = async () => {
           {products.map((product) => (
             <Card key={product.id}>
               <CardHeader>{product.name}</CardHeader>
-              <CardBody display="flex" justifyContent="center">
+              <CardBody
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+              >
                 <Image
                   src={product.image_url}
                   height={300}
                   width={300}
                   alt={product.name}
                 />
+                <Text fontWeight={600} mt={2}>
+                  ${product.price}
+                </Text>
               </CardBody>
               <CardFooter>
-                <Button colorScheme="blue" mx={2} variant="outline">
+                <Button
+                  leftIcon={<BsFillEyeFill />}
+                  colorScheme="blue"
+                  mx={2}
+                  variant="outline"
+                  as="a"
+                  href={`/public/products/${product.id}`}
+                >
                   View
                 </Button>
-                <Button colorScheme="blue" variant="outline">
-                  Add to Cart
-                </Button>
+                <AddToCartButton product={product} />
               </CardFooter>
             </Card>
           ))}
