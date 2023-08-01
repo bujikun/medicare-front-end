@@ -6,12 +6,11 @@ const Context = createContext(null);
 const initialState = {
   items: [],
   totalItemsCount: 0,
+  isCleared:false
 };
 
 const calculateTotalPrice = (arr) => {
     return arr.reduce((total, current) => {
-        console.log("CURRENT :",current);
-        console.log("TOTAL :",total);
         total += current.price * current.count;
         return total;
     }, 0);
@@ -49,16 +48,22 @@ const reducer = (state, action) => {
       totalItemsCount: state.totalItemsCount - removedItem.count,
     };
   } else if (action.type === "REDUCE_PRODUCT_COUNT") {
+    const foundProduct = state.items.find(item=>
+      item.id === action.payload && item.count === 1
+    );
     const mapped = state.items.map((item) => {
-      if (item.id === action.payload) {
-        return { ...item, count: item.count === 1 ? 1 : item.count - 1 };
+      if (item.id === action.payload && item.count>1) {
+        return { ...item, count: item.count - 1 };
       }
       return item;
     });
+    console.log("MAPPED: ",mapped)
     return {
       ...state,
       items: mapped,
-      totalItemsCount: state.totalItemsCount - 1,
+      totalItemsCount: foundProduct
+        ? state.totalItemsCount
+        : state.totalItemsCount - 1,
     };
   } else if (action.type === "INCREASE_PRODUCT_COUNT") {
     const mapped = state.items.map((item) => {
@@ -75,8 +80,12 @@ const reducer = (state, action) => {
   } else if (action.type === "SET_PERSISTED_CART") {
     return { ...action.payload };
   } else if (action.type === "CALCULATE_TOTAL") {
-      calculateTotalPrice(state.items); 
-    return { ...state};
+    calculateTotalPrice(state.items);
+    return { ...state };
+  } else if (action.type === "CHECKOUT") {
+    return { ...state, isCheckingOut: true, ...action.payload };
+  } else if (action.type === "CLEAR_CART") {
+    return { ...state, items: [], isCleared: !state.isCleared, totalItemsCount:0 };
   } else {
     throw new Error("Unknown action");
   }
@@ -93,7 +102,14 @@ const CartContext = ({ children }) => {
 
   useEffect(() => {
     secureLocalStorage.setItem("cart", state);
-  }, [state.totalItemsCount]);
+  }, [state.totalItemsCount,state]);
+
+    useEffect(() => {
+      if (state.isCleared) {
+        secureLocalStorage.removeItem
+          ("cart");
+       }
+    }, [state.isCleared]);
 
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>

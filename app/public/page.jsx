@@ -1,7 +1,6 @@
 
 import SearchBar from "@/components/forms/inputs/SearchBar";
-import { Flex, Text, Heading,Stack,Input,InputGroup,InputLeftElement, Icon,Box} from "@/wrapper/chakra/ui";
-import {BsSearch} from "@/wrapper/icons"
+import { Flex, Text, Heading,Box} from "@/wrapper/chakra/ui";
 const IndexPage =  () => {
 
   return (

@@ -31,6 +31,7 @@ export const authOptions = {
           return null;
         }
         const data = await response.json();
+        console.log(data);
         return data;
       },
     }),
@@ -44,6 +45,10 @@ export const authOptions = {
       session.access_token = token.access_token;
       session.role = token.role;
       session.account_number = token.account_number;
+      session.username = token.username;
+      session.balance = token.balance;
+      session.name = token.name;
+      session.user_id = token.user_id;
       const response = await checkSessionValidity("/auth/introspect",token.access_token)
       if (response.status === 401) {
         session.active = false;
@@ -58,7 +63,13 @@ export const authOptions = {
         //account available only first time after login
         token.access_token = user.token;
         token.role = user.role;
-        token.account_number = user.account_number
+        token.account_number = user.account_number;
+        token.name = user.name;
+        token.balance = user.balance;
+        token.username = user.username;
+        token.user_id = user.id;
+
+
       }
       return token;
     },

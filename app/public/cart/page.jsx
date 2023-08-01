@@ -1,5 +1,5 @@
 import Cart from "@/components/misc/Cart"
-import { Box, Flex } from "@/wrapper/chakra/ui"
+import {  Flex } from "@/wrapper/chakra/ui"
 
 const CartPage = () => {
   return (

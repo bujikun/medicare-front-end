@@ -26,7 +26,7 @@ const initialValues = {
   firstname: "",
   lastname: "",
   account_number: String(uuid()).toUpperCase().replace("-", ""),
-  balance:"100"
+  balance:"1000"
 };
 const validationSchema = Yup.object({
   account_number:Yup.string(),

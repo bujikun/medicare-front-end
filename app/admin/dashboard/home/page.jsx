@@ -10,8 +10,14 @@ import {
   Flex,
   Icon,
 } from "@/wrapper/chakra/ui";
-import { BiSolidPurchaseTag } from "@/wrapper/icons";
 import { redirect } from "next/navigation";
+import {
+  BiSolidPurchaseTag,
+  MdOutlineCategory,
+  FaUsers,
+ AiOutlineShopping,
+
+} from "@/wrapper/icons";
 
 const Home = async () => {
   const response = await fetchGET("/home");
@@ -23,18 +29,25 @@ const Home = async () => {
   } else if (response.ok) {
     homeItems = await response.json();
   }
+  const icons = [
+    BiSolidPurchaseTag,
+    MdOutlineCategory,
+    FaUsers,
+    AiOutlineShopping,
+  ];
   return (
     <Grid
       templateColumns="repeat(auto-fit, minmax(30rem, 1fr))"
       m="auto"
       gap={4}
     >
-      {homeItems?.map((item) => (
+      {homeItems?.map((item,index) => (
         <GridItem p="0.5rem" key={item.title} >
           <HomeCard
             title={item.title}
             count={item.count}
             summary={item.summary}
+            icon={icons[index]}
           />
         </GridItem>
       ))}
@@ -42,7 +55,7 @@ const Home = async () => {
   );
 };
 
-const HomeCard = ({ title, count, summary }) => {
+const HomeCard = ({ title, count, summary,icon }) => {
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -55,7 +68,7 @@ const HomeCard = ({ title, count, summary }) => {
         minW="10rem"
         p="0.5rem"
       >
-        <Icon as={BiSolidPurchaseTag} height="50%" width="50%" />
+        <Icon as={icon} height="50%" width="50%" />
       </Flex>
       <Stack>
         <CardBody>

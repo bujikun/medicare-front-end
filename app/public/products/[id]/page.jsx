@@ -4,6 +4,7 @@ import { Card,Stack,CardBody,Text,Heading,Button,CardFooter, Box,Flex } from "@/
 import Image from "next/image";
 import { FaCartArrowDown } from "@/wrapper/icons";
 import ImageViewer from "@/components/misc/ImageViewer";
+import AddToCartButton from "@/components/buttons/AddToCartButton";
 
 const ViewProductPage = async ({ params }) => {
 
@@ -35,16 +36,12 @@ const ViewProductPage = async ({ params }) => {
               Price: ${product.price}
             </Text>
             <Text>Category: {product.category_name}</Text>
+            <Text mt={1}>Seller: {product.seller_name}</Text>
           </CardBody>
 
           <CardFooter>
             <Box sx={{ display: "inline-block", margin: "0 0.5rem 0 0" }}>
-              <VLink
-                href={`/admin/dashboard/products/edit/${params.id}`}
-                icon={<FaCartArrowDown />}
-              >
-                Add To Cart
-              </VLink>
+              <AddToCartButton product={product} />
             </Box>
           </CardFooter>
         </Stack>

@@ -13,12 +13,13 @@ import {
 } from "@/wrapper/chakra/ui";
 import {BsFillEyeFill} from "@/wrapper/icons"
 import Image from "next/image";
+export const dynamic = "force-dynamic";
 
 const ShopPage = async () => {
       const response = await fetch(`${process.env.BACKEND_API_BASE_URL}/products/shop`);
     const products = await response.json();
     return (
-      <Box>
+      <Box mt={8}>
         <Flex justify="center">
           <Heading>Shop With Us Today!</Heading>
         </Flex>
@@ -40,6 +41,8 @@ const ShopPage = async () => {
                 <Text fontWeight={600} mt={2}>
                   ${product.price}
                 </Text>
+                <Text mt={1}>{product.seller_name}</Text>
+                <Text mt={1}>{product.category_name}</Text>
               </CardBody>
               <CardFooter>
                 <Button

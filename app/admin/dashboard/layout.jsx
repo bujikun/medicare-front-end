@@ -13,9 +13,8 @@ const DashboardLayout = async ({ children }) => {
   const session = await getServerSession(authOptions);
   const active = session?.active ?? false;
   if (session?.role !== "ADMIN") {
-    console.log("ROLE", session?.role);
     redirect("/auth/signin?error=You can not access this page", "replace");
-    signOut();
+    //signOut();
   }
   if (!active) {
     redirect("/auth/signin","replace");

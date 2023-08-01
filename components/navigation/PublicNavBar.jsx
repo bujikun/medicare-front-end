@@ -44,7 +44,7 @@ const navItems = [
 ];
 const PublicNavBar = () => {
   const { isSmallScreen } = useDashboardContext();
-  const { status: sessionStatus } = useSession();
+  const { status: sessionStatus,data:session } = useSession();
   const { state,} = useCartContext();
 
   return (
@@ -57,6 +57,7 @@ const PublicNavBar = () => {
           <NavBarList
             navItems={navItems}
             sessionStatus={sessionStatus}
+            session={session}
             state={state}
           />
         ) : (
@@ -64,6 +65,7 @@ const PublicNavBar = () => {
             navItems={navItems}
             sessionStatus={sessionStatus}
             state={state}
+            session={session}
           />
         )}
       </Flex>
@@ -71,7 +73,7 @@ const PublicNavBar = () => {
   );
 };
 
-const NavBarList = ({ navItems, sessionStatus,state }) => {
+const NavBarList = ({ navItems, sessionStatus,state,session }) => {
 
   return (
     <List>
@@ -85,60 +87,83 @@ const NavBarList = ({ navItems, sessionStatus,state }) => {
               fontSize: "1.5rem",
               color: "#333",
               bg: "none",
-              padding:"0",
-              position:"relative",
+              padding: "0",
+              position: "relative",
               _hover: {
                 color: "teal.700",
                 bg: "teal.50",
               },
             }}
           >
-            {state.totalItemsCount>0 && <Badge variant="solid" colorScheme="red" sx={{position:"absolute",top:0,right:0}}>
-              {state.totalItemsCount}
-            </Badge>}
+            {state.totalItemsCount > 0 && (
+              <Badge
+                variant="solid"
+                colorScheme="red"
+                sx={{ position: "absolute", top: 0, right: 0 }}
+              >
+                {state.totalItemsCount}
+              </Badge>
+            )}
           </Button>
         </ListItem>
         {navItems.map((item) => {
           if (item.session === "free" || item.session === sessionStatus) {
             return (
               <ListItem key={item.name}>
-                <Link href={item.href}>
-                  <Button variant="ghost" colorScheme="teal">
-                    {item.name}
-                  </Button>
-                </Link>
+                <Button
+                  variant="ghost"
+                  colorScheme="teal"
+                  as="a"
+                  href={item.href}
+                >
+                  {item.name}
+                </Button>
               </ListItem>
             );
           }
         })}
         {sessionStatus === "authenticated" && (
-          <ListItem>
-            <Tooltip
-              label="Sign Out"
-              hasArrow
-              aria-label="signout tooltip"
-              tabIndex={0}
-              fontSize="md"
-            >
-              <IconButton
-                icon={<PiSignOutBold />}
-                colorScheme="gray"
-                sx={{
-                  bg: "none",
-                  fontWeight: "500",
-                  fontSize: "1.4rem",
-                  borderRadius: "50%",
-                  _hover: {
-                    bg: "#e60000",
-                    color: "white",
-                  },
-                }}
-                onClick={() => {
-                  signOut({ callbackUrl: "/" });
-                }}
-              />
-            </Tooltip>
-          </ListItem>
+          <>
+            {session.role === "ADMIN" && (
+              <ListItem>
+                <Button
+                  variant="ghost"
+                  colorScheme="teal"
+                  href="/admin/dashboard/home"
+                  as="a"
+                >
+                  Admin Console
+                </Button>
+              </ListItem>
+            )}
+            <ListItem>
+              <Tooltip
+                label="Sign Out"
+                hasArrow
+                aria-label="signout tooltip"
+                tabIndex={0}
+                fontSize="md"
+              >
+                <IconButton
+                  icon={<PiSignOutBold />}
+                  colorScheme="gray"
+                  sx={{
+                    bg: "none",
+                    fontWeight: "500",
+                    fontSize: "1.4rem",
+                    borderRadius: "50%",
+                    _hover: {
+                      bg: "#e60000",
+                      color: "white",
+                    },
+                  }}
+                  onClick={() => {
+                    signOut({ callbackUrl: "/" });
+                  }}
+                />
+              </Tooltip>
+            </ListItem>
+          </>
         )}
         {sessionStatus === "unauthenticated" && (
           <>
@@ -169,7 +194,7 @@ const NavBarList = ({ navItems, sessionStatus,state }) => {
   );
 };
 
-const NavBarMenu = ({ navItems, sessionStatus, state }) => {
+const NavBarMenu = ({ navItems, sessionStatus, state, session }) => {
   
   const itemStyle = {
     fontWeight: 500,
@@ -221,7 +246,7 @@ const NavBarMenu = ({ navItems, sessionStatus, state }) => {
               },
             }}
           >
-            {state.totalItemsCount>0 && (
+            {state.totalItemsCount > 0 && (
               <Badge
                 variant="solid"
                 colorScheme="red"
@@ -260,18 +285,27 @@ const NavBarMenu = ({ navItems, sessionStatus, state }) => {
         )}
 
         {sessionStatus === "authenticated" && (
-          <MenuItem sx={itemStyle}>
-            <Link
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                signOut({ callbackUrl: "/" });
-              }}
-              sx={linkStyle}
-            >
-              Sign Out
-            </Link>
-          </MenuItem>
+          <>
+            {session.role === "ADMIN" && (
+              <MenuItem sx={itemStyle}>
+                <Link href="/admin/dashboard/home" sx={linkStyle}>
+                  Admin Console
+                </Link>
+              </MenuItem>
+            )}
+            <MenuItem sx={itemStyle}>
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut({ callbackUrl: "/" });
+                }}
+                sx={linkStyle}
+              >
+                Sign Out
+              </Link>
+            </MenuItem>
+          </>
         )}
       </MenuList>
     </Menu>

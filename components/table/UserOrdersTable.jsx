@@ -15,14 +15,15 @@ import {
   TableCaption,
   Thead,
   Tr,
+    Stack,
     InputGroup,
-    IconButton,
+    InputLeftElement,
   Input,
   Tbody,
   Th,
   Td,
+  IconButton,
   Icon,
-  HStack,
 } from "@/wrapper/chakra/ui";
 import {
   BsChevronDoubleLeft,
@@ -31,15 +32,33 @@ import {
   BsChevronRight,
   MdOutlineArrowUpward,
   MdOutlineArrowDownward,
-  FaCartArrowDown,
+  BsSearch,
   BsFillEyeFill,
 } from "@/wrapper/icons";
-import { useCartContext } from "@/contexts/CartContext";
-const SearchBarTable = ({ data, columns, name }) => {
+
+const columns = [
+  {
+    header: "Order Number",
+    accessorKey: "id",
+  },
+  {
+    header: "Item Count",
+    accessorFn: row => `${row.order_items.length}`,
+    
+  },
+  {
+    header: "Total Price ($)",
+    accessorKey: "total_price",
+  },
+  {
+    header: "Placed On",
+    accessorKey: "created_on",
+  },
+];
+const UserOrdersTable = ({ data }) => {
   const [sorting, setIsSorting] = useState([]);
   const [filtering, setIsFiltering] = useState('');
   const memoizedData = useMemo(() => data, [data]);
-  const { dispatch } = useCartContext();
   const table = useReactTable({
     data: memoizedData,
     columns,
@@ -55,21 +74,23 @@ const SearchBarTable = ({ data, columns, name }) => {
     onGlobalFilterChange:setIsFiltering
   });
   return (
-    <TableContainer bg="white" p={2} borderRadius="0.5rem">
-      <HStack spacing={4} my={4} justify="flex-end">
-        <InputGroup w="10rem">
+    <TableContainer mx={8}>
+      <Stack spacing={4} my={4}>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={BsSearch} />
+          </InputLeftElement>
           <Input
             type="text"
-            placeholder="Filter"
+            placeholder="Type to search"
             value={filtering}
             onChange={(e) => setIsFiltering(e.target.value)}
-            borderColor="gray.400"
           />
         </InputGroup>
-      </HStack>
+      </Stack>
       <Table variant="striped" colorScheme="gray" overflow="scroll" size="sm">
         <TableCaption>
-          {memoizedData.length} {name} found!
+          {memoizedData.length} order(s) made.
         </TableCaption>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -104,7 +125,7 @@ const SearchBarTable = ({ data, columns, name }) => {
                   }
                 </Th>
               ))}
-              <Th></Th>
+              <Th>Action</Th>
             </Tr>
           ))}
         </Thead>
@@ -117,24 +138,13 @@ const SearchBarTable = ({ data, columns, name }) => {
                 </Td>
               ))}
               <Td>
-                {/* <ActionMenu id={row.original.id} name={row.original.name} /> */}
                 <IconButton
                   icon={<BsFillEyeFill />}
-                  colorScheme="teal"
                   fontSize="1.2rem"
                   isRound={true}
                   mx={2}
                   as="a"
-                  href={`/public/products/${row.original.id}`}
-                />
-
-                <IconButton
-                  icon={<FaCartArrowDown />}
-                  colorScheme="teal"
-                  fontSize="1.2rem"
-                  isRound={true}
-                  mx={2}
-                  onClick={()=>{dispatch({type:"ADD_TO_CART",payload:row.original})}}
+                  href={`/public/orders/view/${row.original.id}`}
                 />
               </Td>
             </Tr>
@@ -174,4 +184,4 @@ const SearchBarTable = ({ data, columns, name }) => {
     </TableContainer>
   );
 };
-export default SearchBarTable;
+export default UserOrdersTable;

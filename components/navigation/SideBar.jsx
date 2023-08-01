@@ -38,30 +38,11 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
       icon: AiOutlineShopping,
     },
     {
-      name: "Customers",
-      href: "/admin/dashboard/customers",
-      icon: BsFillFilePersonFill,
-    },
-    {
       name: "Users",
       href: "/admin/dashboard/users",
       icon: FiUsers,
     },
-    {
-      name: "Settings",
-      href: "/admin/dashboard/settings",
-      icon: FiSettings,
-    },
-    {
-      name: "Roles",
-      href: "/admin/dashboard/roles",
-      icon: MdPolicy,
-    },
-    {
-      name: "Permissions",
-      href: "/admin/dashboard/permissions",
-      icon: BsArrowDownRightSquare,
-    },
+ 
   ];
 const SideBar = () => {
   const { setIsDrawerOpen } = useDashboardContext();

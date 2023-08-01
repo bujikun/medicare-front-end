@@ -1,5 +1,6 @@
 "use client"
 import SearchBarTable from "@/components/table/SearchBarTable";
+import DashboardContext from "@/contexts/DashboardContext";
 import {
   Icon,
   FormControl,
@@ -71,7 +72,6 @@ const SearchBar = () => {
 
     }
   }
-  console.log(result);
   return (
     <Box>
       <FormControl mb={4}>
@@ -109,7 +109,9 @@ const SearchBar = () => {
         </Box>
       )}
       {result.length > 0 ? (
+        <DashboardContext>
         <SearchBarTable data={result} columns={columns} name="products" />
+        </DashboardContext>
       ) : (
         <></>
       )}

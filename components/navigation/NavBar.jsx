@@ -27,17 +27,10 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { signOut,useSession } from "next-auth/react";
 
 const navItems = [
+
   {
-    name: "Products",
-    href: "/admin/dashboard/products",
-  },
-  {
-    name: "Orders",
-    href: "/admin/dashboard/orders",
-  },
-  {
-    name: "Account",
-    href: "/admin/dashboard/account",
+    name: "Shop",
+    href: "/public/shop",
   },
 ];
 const NavBar = () => {
@@ -66,12 +59,6 @@ const NavBarList = ({ navItems,sessionStatus }) => {
   return (
     <List>
       <Flex gap={4} mr="1rem" align="center" as="nav">
-        <ListItem>
-          <IconButton icon={<BsCartCheck />} sx={{
-            fontSize: "1.5rem", color: "#333", bg: "none", _hover: {
-            color:"teal.700",bg:"teal.50"
-          }}} />
-        </ListItem>
         {navItems.map((item) => (
           <ListItem key={item.name}>
             <Link href={item.href}>
