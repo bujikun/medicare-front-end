@@ -29,8 +29,8 @@ import { signOut,useSession } from "next-auth/react";
 const navItems = [
 
   {
-    name: "Shop",
-    href: "/public/shop",
+    name: "Public",
+    href: "/",
   },
 ];
 const NavBar = () => {

@@ -31,7 +31,6 @@ export const authOptions = {
           return null;
         }
         const data = await response.json();
-        console.log(data);
         return data;
       },
     }),

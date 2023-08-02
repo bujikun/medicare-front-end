@@ -7,6 +7,12 @@ const nextConfig = {
     minimumCacheTTL: 60,
     remotePatterns: [
       {
+        protocol: "https",
+        hostname: "medicare-bucket-001.s3.us-east-1.amazonaws.com",
+        port: "",
+        pathname: "/",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "3000",

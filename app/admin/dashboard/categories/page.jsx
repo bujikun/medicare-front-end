@@ -1,6 +1,5 @@
 import VLink from "@/components/misc/VLink";
-import AllProductsTable from "@/components/table/AllProductsTable";
-import BasicTable from "@/components/table/BasicTable";
+import CategoriesTable from "@/components/table/CategoriesTable";
 import { fetchGET } from "@/lib/util";
 import {
   Alert,
@@ -9,31 +8,25 @@ import {
     AlertDescription,
   Box,
   Heading,
-  Button,
-  IconButton
 } from "@/wrapper/chakra/ui";
 import { redirect } from "next/navigation";
 
 const columns = [
     {
-        header: "name",
-        accessorKey:"name"
+        header: "ID",
+        accessorKey:"id"
 },
     {
-        header: "Price ($)",
-        accessorKey: "price",
+        header: "Name",
+        accessorKey: "name",
 },
     {
         header: "Added On",
         accessorKey:"created_on"
 },
-    {
-        header: "Category",
-        accessorKey:"category_name"
-    },
 ];
-const ProductIndexPage = async () => {
-    const response = await fetchGET("/products");
+const CategoryIndexPage = async () => {
+    const response = await fetchGET("/categories");
   if (response.status === 401) {
     redirect("/auth/signin", "replace");
     }
@@ -46,13 +39,13 @@ const ProductIndexPage = async () => {
       </Alert>
     );
   }
-  const products = await response.json();
-  if (products.length <= 0) {
+  const categories = await response.json();
+  if (categories.length <= 0) {
     return (
       <Alert status="error">
         <AlertIcon />
         <AlertTitle>Error!</AlertTitle>
-        <AlertDescription>No products in the database!</AlertDescription>
+        <AlertDescription>No categories in the database!</AlertDescription>
       </Alert>
     );
   }
@@ -66,21 +59,21 @@ const ProductIndexPage = async () => {
       >
         <Box mb={8}>
           <Heading as="h3" fontWeight="normal">
-            Products
+            Categories
           </Heading>
         </Box>
         <Box mb={4}>
           <VLink
-            href="/admin/dashboard/products/add"
+            href="/admin/dashboard/categories/add"
             sx={{ marginBottom: "2rem" }}
           >
-            Add New Product
+            Add New Category
           </VLink>
         </Box>
 
-            <AllProductsTable columns={columns} data={products} name="Products"/>
+            <CategoriesTable columns={columns} data={categories} name="Categories"/>
       </div>
     );
 };
 
-export default ProductIndexPage;
+export default CategoryIndexPage;
