@@ -17,7 +17,7 @@ export  const dynamic = "force-dynamic"
 const ProductIndexPage = async () => {
     const response = await fetchGET("/products");
   if (response.status === 401) {
-    redirect("/auth/signin", "replace");
+    redirect("/auth/signin");
     }
   if (!response.ok) {
     return (
