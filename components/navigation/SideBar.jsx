@@ -1,16 +1,13 @@
 "use client"
 import styles from "@/components/navigation/navigation.module.css";
-import { Flex, IconButton, List, ListIcon, ListItem, Text,Box } from "@/wrapper/chakra/ui";
+import { Flex, IconButton, List, ListIcon, ListItem, Text, } from "@/wrapper/chakra/ui";
 import {
   BiSolidDashboard,
   FaBriefcaseMedical,
   BiCategory,
   AiOutlineShopping,
-  BsFillFilePersonFill,
   FiUsers,
-  FiSettings,
-  MdPolicy,
-  BsArrowDownRightSquare,
+  FaOpencart,
   AiOutlineClose,
 } from "@/wrapper/icons";
 import Image from "next/image";
@@ -33,6 +30,11 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
       icon: BiCategory,
     },
     {
+      name: "Sellers",
+      href: "/admin/dashboard/sellers",
+      icon: FaOpencart,
+    },
+    {
       name: "Orders",
       href: "/admin/dashboard/orders",
       icon: AiOutlineShopping,
@@ -42,7 +44,6 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
       href: "/admin/dashboard/users",
       icon: FiUsers,
     },
- 
   ];
 const SideBar = () => {
   const { setIsDrawerOpen } = useDashboardContext();

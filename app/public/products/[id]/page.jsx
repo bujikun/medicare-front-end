@@ -1,8 +1,6 @@
-import VLink from "@/components/misc/VLink";
-import { fetchGET, fetchGETPublic } from "@/lib/util";
-import { Card,Stack,CardBody,Text,Heading,Button,CardFooter, Box,Flex } from "@/wrapper/chakra/ui";
-import Image from "next/image";
-import { FaCartArrowDown } from "@/wrapper/icons";
+
+import { fetchGETPublic } from "@/lib/util";
+import { Card,Stack,CardBody,Text,Heading,Alert,AlertTitle,AlertDescription,CardFooter, Box,Flex } from "@/wrapper/chakra/ui";
 import ImageViewer from "@/components/misc/ImageViewer";
 import AddToCartButton from "@/components/buttons/AddToCartButton";
 
@@ -10,6 +8,12 @@ const ViewProductPage = async ({ params }) => {
 
     const response = await fetchGETPublic(`/products/${params.id}`);
   const product = await response.json();
+  if (!response.ok) {
+  return  (<Alert status="error">
+      <AlertTitle>Error!</AlertTitle>
+      <AlertDescription>Product could not be found</AlertDescription>
+    </Alert>)
+  }
   return (
     <Flex justify="center" m={8}>
       <Card

@@ -1,5 +1,10 @@
 "use client";
-
+import {
+  BsThreeDotsVertical,
+  MdRemoveRedEye,
+  MdEditSquare,
+  FaTrash,
+} from "@/wrapper/icons";
 import {
   useReactTable,
   getCoreRowModel,
@@ -15,16 +20,21 @@ import {
   TableCaption,
   Thead,
   Tr,
-    Stack,
-    InputGroup,
-    InputLeftElement,
+  Stack,
+  InputGroup,
+  InputLeftElement,
   Input,
   Tbody,
   Th,
   Td,
   IconButton,
   Icon,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@/wrapper/chakra/ui";
+import ActionMenu from "../misc/ActionMenu";
 import {
   BsChevronDoubleLeft,
   BsChevronDoubleRight,
@@ -33,32 +43,8 @@ import {
   MdOutlineArrowUpward,
   MdOutlineArrowDownward,
   BsSearch,
-  BsFillEyeFill,
 } from "@/wrapper/icons";
-
-const columns = [
-  {
-    header: "Order Number",
-    accessorFn: (row) => `${String(row.id).toLocaleUpperCase()}`,
-  },
-  {
-    header: "Customer Name",
-    accessorFn: (row) => `${String(row.customer_name).toLocaleUpperCase()}`,
-  },
-  {
-    header: "Item Count",
-    accessorFn: (row) => `${row.order_items.length}`,
-  },
-  {
-    header: "Total Price ($)",
-    accessorKey: "total_price",
-  },
-  {
-    header: "Placed On",
-    accessorKey: "created_on",
-  },
-];
-const AllOrdersTable = ({ data }) => {
+const SellersTable = ({ data, columns, name }) => {
   const [sorting, setIsSorting] = useState([]);
   const [filtering, setIsFiltering] = useState('');
   const memoizedData = useMemo(() => data, [data]);
@@ -76,8 +62,16 @@ const AllOrdersTable = ({ data }) => {
       onSortingChange: setIsSorting,
     onGlobalFilterChange:setIsFiltering
   });
+   const style = {
+     bg: "none",
+     _hover: {
+       bg: "teal.50",
+       color: "teal.700",
+       fontWeight: "600",
+     },
+   };
   return (
-    <TableContainer mx={8}>
+    <TableContainer>
       <Stack spacing={4} my={4}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -93,7 +87,7 @@ const AllOrdersTable = ({ data }) => {
       </Stack>
       <Table variant="striped" colorScheme="gray" overflow="scroll" size="sm">
         <TableCaption>
-          {memoizedData.length} order(s) made.
+          {memoizedData.length} available {name}
         </TableCaption>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -142,13 +136,14 @@ const AllOrdersTable = ({ data }) => {
               ))}
               <Td>
                 <IconButton
-                  icon={<BsFillEyeFill />}
-                  fontSize="1.2rem"
-                  isRound={true}
-                  mx={2}
+                  icon={<MdEditSquare />}
                   as="a"
-                  href={`/admin/dashboard/orders/view/${row.original.id}`}
-                />
+                  href={`/admin/dashboard/sellers/edit/${row.original.id}`}
+                  sx={style}
+                  isRound
+                >
+                  Edit
+                </IconButton>
               </Td>
             </Tr>
           ))}
@@ -187,4 +182,4 @@ const AllOrdersTable = ({ data }) => {
     </TableContainer>
   );
 };
-export default AllOrdersTable;
+export default SellersTable;

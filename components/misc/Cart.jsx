@@ -18,7 +18,7 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { FaChevronUp, FaChevronDown, FaTrash } from "react-icons/fa6";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { PiSignInBold } from "react-icons/pi";
@@ -39,9 +39,11 @@ const Cart = () => {
     <>
       {state.totalItemsCount === 0 ? (
         <Flex justify="center" align="center" w="95vw">
-          <Heading as="h6" fontWeight={400} color="red">
-            No items in the cart!
-          </Heading>
+          <Suspense fallback={<div>Loading cart ...!</div>}>
+            <Heading as="h6" fontWeight={400} color="red">
+              No items in the cart!
+            </Heading>
+          </Suspense>
         </Flex>
       ) : (
         <Flex direction="column" w="95vw">
@@ -147,21 +149,18 @@ const Cart = () => {
                       variant="solid"
                       size="lg"
                       my={2}
-                                              colorScheme="orange"
-                                              onClick={() => {
-                                                  dispatch({
-                                                    type: "CHECKOUT",
-                                                    payload: {
-                                                      totalPrice:
-                                                        calculateTotalPrice(
-                                                          state.items
-                                                            ),
-                                                        name: session.name,
-                                                        username:session.username
-                                                    },
-                                                  });
-                                                  router.push("/public/cart/checkout")
-                                              }}
+                      colorScheme="orange"
+                      onClick={() => {
+                        dispatch({
+                          type: "CHECKOUT",
+                          payload: {
+                            totalPrice: calculateTotalPrice(state.items),
+                            name: session.name,
+                            username: session.username,
+                          },
+                        });
+                        router.push("/public/cart/checkout");
+                      }}
                     >
                       Checkout
                     </Button>
@@ -169,7 +168,9 @@ const Cart = () => {
                     <Alert status="error">
                       <AlertIcon />
                       <AlertTitle>Low Balance!</AlertTitle>
-                      <AlertDescription>You can not checkout this order.</AlertDescription>
+                      <AlertDescription>
+                        You can not checkout this order.
+                      </AlertDescription>
                     </Alert>
                   )
                 ) : (

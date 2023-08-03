@@ -19,6 +19,7 @@ import { redirect, useRouter, useSearchParams } from "next/navigation";
 import VSelect from "../inputs/VSelect";
 import VImageInputField from "../inputs/VImageInputField";
 import { useState } from "react";
+import VTextArea from "../inputs/VTextArea";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -65,7 +66,6 @@ const AddProductForm = ({ token, sellers, categories }) => {
       setIsLoading(false);
       setIsFailed(true);
     } else {
-      console.log(data);
       router.replace(`/admin/dashboard/products/add/image?id=${data.product.id}&name=${data.product.name}`);
     }
   };
@@ -93,7 +93,9 @@ const AddProductForm = ({ token, sellers, categories }) => {
         {isFailed && (
           <Alert status="error">
             <AlertTitle>Error!</AlertTitle>
-            <AlertDescription>An product could not be saved.Try again later</AlertDescription>
+            <AlertDescription>
+              Product could not be saved.Try again later
+            </AlertDescription>
           </Alert>
         )}
         <Formik
@@ -118,7 +120,8 @@ const AddProductForm = ({ token, sellers, categories }) => {
               autoComplete="on"
               error={error}
             />
-            <VInputField
+
+            <VTextArea
               label="Description"
               name="description"
               type="text"
@@ -139,15 +142,11 @@ const AddProductForm = ({ token, sellers, categories }) => {
                 </option>
               ))}
             </VSelect>
-            {/* <Box my={2}>
-              <VImageInputField
-                label="Image"
-                name="image"
-                type="file"
-                accept="image/*"
-              />
-            </Box> */}
-            <VSubmitButton text="Log In" isLoading={isLoading}  loadingText="Adding Product..."/>
+            <VSubmitButton
+              text="Add"
+              isLoading={isLoading}
+              loadingText="Adding Product..."
+            />
           </Form>
         </Formik>
       </Box>

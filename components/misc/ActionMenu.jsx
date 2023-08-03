@@ -63,30 +63,32 @@ const ActionMenu = ({ id, name, product }) => {
         }}
       />
       <MenuList>
-        <MenuItem
-          icon={<MdRemoveRedEye />}
-          as="a"
-          href={`/admin/dashboard/products/view/${id}`}
-          sx={style}
-        >
-          View
-        </MenuItem>
-        <MenuItem
-          icon={<MdEditSquare />}
-          as="a"
-          href={`/admin/dashboard/products/edit/${id}`}
-          sx={style}
-        >
-          Edit
-        </MenuItem>
-        <MenuItem
-          icon={<MdEditSquare />}
-          as="a"
-          href={`/admin/dashboard/products/add/image?id=${id}&name=${name}`}
-          sx={style}
-        >
-          Change Image
-        </MenuItem>
+       {!product.disabled && <>
+          <MenuItem
+            icon={<MdRemoveRedEye />}
+            as="a"
+            href={`/admin/dashboard/products/view/${id}`}
+            sx={style}
+          >
+            View
+          </MenuItem>
+          <MenuItem
+            icon={<MdEditSquare />}
+            as="a"
+            href={`/admin/dashboard/products/edit/${id}`}
+            sx={style}
+          >
+            Edit
+          </MenuItem>
+          <MenuItem
+            icon={<MdEditSquare />}
+            as="a"
+            href={`/admin/dashboard/products/add/image?id=${id}&name=${name}`}
+            sx={style}
+          >
+            Change Image
+          </MenuItem>
+        </>}
         <MenuItem
           icon={<FaTrash />}
           sx={{
@@ -98,14 +100,14 @@ const ActionMenu = ({ id, name, product }) => {
             },
           }}
           onClick={() => {
-           toast({
-             title: product.disabled ? "Enabling..." : "Disabling...",
-             description: name,
-             status: product.disabled ? "success" : "error",
-             duration: 5000,
-             isClosable: true,
-             position: "top-right",
-           });
+            toast({
+              title: product.disabled ? "Enabling..." : "Disabling...",
+              description: name,
+              status: product.disabled ? "success" : "error",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
             setIsDisabling(true);
           }}
         >

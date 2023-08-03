@@ -4,6 +4,7 @@ import { Card,Stack,CardBody,Text,Heading,Button,CardFooter, Box } from "@/wrapp
 import Image from "next/image";
 import {AiOutlineEdit} from "@/wrapper/icons"
 import ImageViewer from "@/components/misc/ImageViewer";
+import DisableProductButton from "@/components/buttons/DisableProductButton";
 const ViewProductPage = async ({ params }) => {
 
     const response = await fetchGET(`/products/${params.id}`);
@@ -56,13 +57,7 @@ const ViewProductPage = async ({ params }) => {
             </Box>
           ) : (
             <Box sx={{ display: "inline-block", margin: "0 0.5rem 0 0" }}>
-              <VLink
-                href={`/admin/dashboard/products/edit/${params.id}`}
-                icon={<AiOutlineEdit />}
-                scheme="red"
-              >
-                Disable
-              </VLink>
+              <DisableProductButton product={product}/>
             </Box>
           )}
         </CardFooter>

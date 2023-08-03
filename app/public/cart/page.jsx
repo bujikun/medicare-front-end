@@ -8,10 +8,11 @@ const CartPage = () => {
       bg="#fff"
       borderRadius={2}
       p={4}
-          justify="flex-start"
-          minH="80vh"
+      justify="flex-start"
+      minH="80vh"
     >
-      <Cart />
+        <Cart />
+      
     </Flex>
   );
 }

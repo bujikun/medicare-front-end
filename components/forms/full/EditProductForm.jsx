@@ -9,11 +9,11 @@ import {
   Box,
   Flex,
   Heading,
-  Text,
 } from "@/wrapper/chakra/ui";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
+import VTextArea from "../inputs/VTextArea";
 import VSelect from "../inputs/VSelect";
 import { useState } from "react";
 
@@ -117,7 +117,7 @@ const EditProductForm = ({ token, sellers, categories, product }) => {
               autoComplete="on"
               error={error}
             />
-            <VInputField
+            <VTextArea
               label="Description"
               name="description"
               type="text"

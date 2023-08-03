@@ -13,10 +13,6 @@ import { redirect } from "next/navigation";
 
 const columns = [
     {
-        header: "ID",
-        accessorKey:"id"
-},
-    {
         header: "Name",
         accessorKey: "name",
 },
