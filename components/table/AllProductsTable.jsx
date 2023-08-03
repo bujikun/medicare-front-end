@@ -22,10 +22,10 @@ import {
   Tbody,
   Th,
   Td,
-  Button,
   IconButton,
   Icon,
-} from "@/wrapper/chakra/ui";
+  Badge
+} from "@chakra-ui/react";
 import ActionMenu from "../misc/ActionMenu";
 import {
   BsChevronDoubleLeft,
@@ -36,7 +36,31 @@ import {
   MdOutlineArrowDownward,
   BsSearch,
 } from "@/wrapper/icons";
-const AllProductsTable = ({ data, columns, name }) => {
+
+const columns = [
+  {
+    header: "name",
+    accessorKey: "name",
+  },
+  {
+    header: "Price ($)",
+    accessorKey: "price",
+  },
+  {
+    header: "Category",
+    accessorKey: "category_name",
+  },
+  {
+    header: "Disabled",
+    accessorFn: (row) => row.disabled
+  },
+  {
+    header: "Added On",
+    accessorKey: "created_on",
+  },
+];
+
+const AllProductsTable = ({ data, name }) => {
   const [sorting, setIsSorting] = useState([]);
   const [filtering, setIsFiltering] = useState('');
   const memoizedData = useMemo(() => data, [data]);
@@ -114,7 +138,7 @@ const AllProductsTable = ({ data, columns, name }) => {
                 </Td>
               ))}
               <Td>
-                <ActionMenu id={row.original.id} name={row.original.name} />
+                <ActionMenu id={row.original.id} name={row.original.name} product={row.original} />
               </Td>
             </Tr>
           ))}

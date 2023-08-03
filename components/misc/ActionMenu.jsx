@@ -1,17 +1,44 @@
+"use client";
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   IconButton,
-} from "@/wrapper/chakra/ui";
+  useToast,
+} from "@chakra-ui/react";
 import {
   BsThreeDotsVertical,
   MdRemoveRedEye,
   MdEditSquare,
   FaTrash,
 } from "@/wrapper/icons";
-const ActionMenu = ({ id,name }) => {
+import { useState, useEffect } from "react";
+import { redirect, useRouter } from "next/navigation";
+const ActionMenu = ({ id, name, product }) => {
+  const [isDisabling, setIsDisabling] = useState(false);
+  const router = useRouter()
+  useEffect(() => {
+    const disableProduct = async () => {
+      const response = await fetch(`/api/admin/products/disable`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({ id: product.id,disabled:!product.disabled }),
+      });
+              console.log("RESPONSE",response.ok);
+
+      if (response.ok) {
+        router.refresh("/admin/dashboard/products");
+      }
+    };
+    if (isDisabling) {
+      disableProduct();
+      setIsDisabling(false);
+    }
+  }, [isDisabling]);
+  const toast = useToast();
   const style = {
     bg: "none",
     _hover: {
@@ -67,11 +94,22 @@ const ActionMenu = ({ id,name }) => {
             _hover: {
               bg: "red.50",
               color: "red.700",
-              fontWeight: "600",
+              fontWeight: "500",
             },
           }}
+          onClick={() => {
+           toast({
+             title: product.disabled ? "Enabling..." : "Disabling...",
+             description: name,
+             status: product.disabled ? "success" : "error",
+             duration: 5000,
+             isClosable: true,
+             position: "top-right",
+           });
+            setIsDisabling(true);
+          }}
         >
-          Disable
+          {product.disabled ? "Enable" : "Disable"}
         </MenuItem>
       </MenuList>
     </Menu>

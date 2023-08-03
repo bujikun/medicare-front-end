@@ -147,7 +147,7 @@ const AddProductForm = ({ token, sellers, categories }) => {
                 accept="image/*"
               />
             </Box> */}
-            <VSubmitButton text="Log In" isLoading={isLoading} />
+            <VSubmitButton text="Log In" isLoading={isLoading}  loadingText="Adding Product..."/>
           </Form>
         </Formik>
       </Box>

@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
+  // experimental: {
+  //   serverActions: true,
+  // },
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [
@@ -10,7 +10,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "medicare-bucket-001.s3.us-east-1.amazonaws.com",
         port: "",
-        pathname: "/",
       },
       {
         protocol: "http",

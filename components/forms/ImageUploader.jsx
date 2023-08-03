@@ -37,7 +37,7 @@ const ImageUploader = ({csrfToken,id}) => {
           ref={ref}
         />
         <Box my={4}>
-          <Button colorScheme="blue" type="submit" isLoading={isSubmitting}>
+          <Button colorScheme="blue" type="submit" isLoading={isSubmitting} loadingText="Uploading ...">
             Upload
           </Button>
         </Box>

@@ -138,7 +138,11 @@ const EditProductForm = ({ token, sellers, categories, product }) => {
                 </option>
               ))}
             </VSelect>
-            <VSubmitButton text="Submit" isLoading={isLoading} />
+            <VSubmitButton
+              text="Submit"
+              isLoading={isLoading}
+              loadingText="Submitting Changes ...!"
+            />
           </Form>
         </Formik>
       </Box>

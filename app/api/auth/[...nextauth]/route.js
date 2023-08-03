@@ -67,8 +67,6 @@ export const authOptions = {
         token.balance = user.balance;
         token.username = user.username;
         token.user_id = user.id;
-
-
       }
       return token;
     },

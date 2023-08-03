@@ -1,6 +1,5 @@
 import VLink from "@/components/misc/VLink";
 import AllProductsTable from "@/components/table/AllProductsTable";
-import BasicTable from "@/components/table/BasicTable";
 import { fetchGET } from "@/lib/util";
 import {
   Alert,
@@ -9,29 +8,12 @@ import {
     AlertDescription,
   Box,
   Heading,
-  Button,
-  IconButton
 } from "@/wrapper/chakra/ui";
 import { redirect } from "next/navigation";
 
-const columns = [
-    {
-        header: "name",
-        accessorKey:"name"
-},
-    {
-        header: "Price ($)",
-        accessorKey: "price",
-},
-    {
-        header: "Added On",
-        accessorKey:"created_on"
-},
-    {
-        header: "Category",
-        accessorKey:"category_name"
-    },
-];
+export  const dynamic = "force-dynamic"
+
+
 const ProductIndexPage = async () => {
     const response = await fetchGET("/products");
   if (response.status === 401) {
@@ -78,7 +60,7 @@ const ProductIndexPage = async () => {
           </VLink>
         </Box>
 
-            <AllProductsTable columns={columns} data={products} name="Products"/>
+            <AllProductsTable  data={products} name="Products"/>
       </div>
     );
 };

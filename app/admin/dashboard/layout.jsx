@@ -5,7 +5,7 @@ import Aside from "@/components/navigation/Aside";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 export const dynamic = "force-dynamic";
 
@@ -17,9 +17,9 @@ const DashboardLayout = async ({ children }) => {
     signOut();
   }
   if (!active) {
-    redirect("/auth/signin","replace");
-  }
-  
+    //redirect("/auth/signin","replace");
+    signIn(undefined);
+  }  
   return (
     <div
       style={{
