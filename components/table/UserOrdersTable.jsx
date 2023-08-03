@@ -39,12 +39,11 @@ import {
 const columns = [
   {
     header: "Order Number",
-    accessorKey: "id",
+    accessorFn: (row) => `${String(row.id).toLocaleUpperCase()}`,
   },
   {
     header: "Item Count",
-    accessorFn: row => `${row.order_items.length}`,
-    
+    accessorFn: (row) => `${row.order_items.length}`,
   },
   {
     header: "Total Price ($)",
