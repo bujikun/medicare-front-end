@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [
@@ -11,5 +12,4 @@ const nextConfig = {
     ],
   },
 };
-
 module.exports = nextConfig
