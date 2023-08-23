@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "medicare-bucket-001.s3.us-east-1.amazonaws.com",
+        hostname: "medicare-bucket-002.s3.us-east-1.amazonaws.com",
         port: "",
       },
     ],

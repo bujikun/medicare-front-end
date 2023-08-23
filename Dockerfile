@@ -21,6 +21,8 @@ RUN addgroup --system --gid 1001 medicaregroup
 RUN adduser --system --uid 1001 medicareuser
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
+COPY .env.local /app/.env.local
+COPY next.config.js /app/next.config.js
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=medicareuser:medicaregroup /app/.next/standalone ./
